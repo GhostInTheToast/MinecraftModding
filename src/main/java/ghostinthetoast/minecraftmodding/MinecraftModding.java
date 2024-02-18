@@ -1,6 +1,5 @@
 package ghostinthetoast.minecraftmodding;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,7 +13,8 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
@@ -23,15 +23,12 @@ import java.util.stream.Collectors;
 public class MinecraftModding {
 
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public MinecraftModding() {
-        // Register the setup method for modloading
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
-        // Register the enqueueIMC method for modloading
         bus.addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
         bus.addListener(this::processIMC);
 
         // Register ourselves for server and other game events we are interested in
