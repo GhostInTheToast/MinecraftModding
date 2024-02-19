@@ -1,5 +1,6 @@
 package ghostinthetoast.minecraftmodding;
 
+import ghostinthetoast.minecraftmodding.core.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,10 +19,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
+import static ghostinthetoast.minecraftmodding.MinecraftModding.MOD_ID;
+
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("minecraftmodding")
+@Mod(MOD_ID)
 public class MinecraftModding {
 
+    public static final String MOD_ID = "minecraftmodding";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -30,6 +34,7 @@ public class MinecraftModding {
         bus.addListener(this::setup);
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::processIMC);
+        ModBlocks.BLOCKS.register(bus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
